@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #4a4a4a;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #767676;
+            font-size: 1rem;
+        }
+
+        .quote-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .quote-text {
+            font-size: 1.5rem;
+            line-height: 1.4;
+            color: #333;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .quote-text::before,
+        .quote-text::after {
+            content: '"';
+            font-size: 2rem;
+            color: #764ba2;
+        }
+
+        .quote-author {
+            font-style: italic;
+            color: #666;
+            font-size: 1.1rem;
+            text-align: right;
+        }
+
+        .quote-author::before {
+            content: "— ";
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            background-color: #764ba2;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-twitter {
+            background-color: #1da1f2;
+        }
+
+        .btn-twitter:hover {
+            background-color: #0d8ecf;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .quote-text {
+                font-size: 1.2rem;
+            }
+
+            .buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {opacity: 0; transform: translateY(20px);}
+            100% {opacity: 1; transform: translateY(0);}
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Random Quote Generator</h1>
+            <p class="subtitle">Click the button for the quotes</p>
+        </div>
+
+        <div class="quote-box">
+            <p class="quote-text" id="quote-text">The only way to do great work is to love what you do.</p>
+            <p class="quote-author" id="quote-author">Steve Jobs</p>
+        </div>
+
+        <div class="buttons">
+            <button class="btn" id="new-quote-btn">New Quote</button>
+            <a href="#" class="btn btn-twitter" id="tweet-quote" target="_blank">Tweet</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const quoteText = document.getElementById('quote-text');
+            const quoteAuthor = document.getElementById('quote-author');
+            const newQuoteBtn = document.getElementById('new-quote-btn');
+            const tweetQuoteBtn = document.getElementById('tweet-quote');
+            const quotes = [
+                { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+                { text: "Life is what happens when you're busy making other plans.", author: "John Lennon" },
+                { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
+                { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
+                { text: "Success is not final, failure is not fatal: It is the courage to continue that counts.", author: "Winston Churchill" },
+                { text: "In the middle of difficulty lies opportunity.", author: "Albert Einstein" },
+                { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+                { text: "The only limit to our realization of tomorrow will be our doubts of today.", author: "Franklin D. Roosevelt" },
+                { text: "The way to get started is to quit talking and begin doing.", author: "Walt Disney" },
+                { text: "You must be the change you wish to see in the world.", author: "Mahatma Gandhi" },
+                { text: "Education is the most powerful weapon which you can use to change the world.", author: "Nelson Mandela" },
+                { text: "The greatest glory in living lies not in never falling, but in rising every time we fall.", author: "Nelson Mandela" },
+                { text: "Whether you think you can or you think you can't, you're right.", author: "Henry Ford" },
+                { text: "Your time is limited, so don't waste it living someone else's life.", author: "Steve Jobs" },
+                { text: "If you look at what you have in life, you'll always have more. If you look at what you don't have in life, you'll never have enough.", author: "Oprah Winfrey" }
+            ];
+
+            function getRandomQuote() {
+                const randomIndex = Math.floor(Math.random() * quotes.length);
+                return quotes[randomIndex];
+            }
+
+            function displayNewQuote() {
+                quoteText.classList.remove('fade-in');
+                quoteAuthor.classList.remove('fade-in');
+                void quoteText.offsetWidth;
+                void quoteAuthor.offsetWidth;
+
+                const quote = getRandomQuote();
+
+                quoteText.textContent = quote.text;
+                quoteAuthor.textContent = quote.author;
+
+                quoteText.classList.add('fade-in');
+                quoteAuthor.classList.add('fade-in');
+
+                const tweetText = encodeURIComponent(`"${quote.text}" — ${quote.author}`);
+                tweetQuoteBtn.href = `https://twitter.com/intent/tweet?text=${tweetText}`;
+            }
+
+            newQuoteBtn.addEventListener('click', displayNewQuote);
+            displayNewQuote();
+        });
+    </script>
+</body>
+</html>
